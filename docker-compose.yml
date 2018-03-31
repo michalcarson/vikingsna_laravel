@@ -1,0 +1,43 @@
+version: '2'
+services:
+  vikingsna-mysql:
+    container_name: vikingsna-mysql
+    image: mysql:5.7
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: allfather
+    volumes:
+      - ./docker/vikingsna-mysql/storage/var_lib_mysql:/var/lib/mysql
+      - ./docker/vikingsna-mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    command:
+      - --sql-mode=NO_ENGINE_SUBSTITUTION
+
+  vikingsna-nginx:
+    container_name: vikingsna-nginx
+    build: ./docker/vikingsna-nginx/
+    image: vikingsna/vikingsna-nginx
+    ports:
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/api # for use without docker-sync
+      #- vikingsna-docker-sync-php:/var/www/api
+    depends_on:
+      - vikingsna-php
+
+  vikingsna-php:
+    container_name: vikingsna-php
+    build: ./docker/vikingsna-php/
+    image: vikingsna/vikingsna-php
+    ports:
+      - "9003:9003"
+    volumes:
+      - ./:/var/www/api # for use without docker-sync
+      #- vikingsna-docker-sync-php:/var/www/api
+    depends_on:
+      - vikingsna-mysql
+
+volumes:
+  vikingsna-docker-sync-php:
+    external: true
