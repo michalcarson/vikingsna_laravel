@@ -38,6 +38,6 @@ services:
     depends_on:
       - vikingsna-mysql
 
-volumes:
-  vikingsna-docker-sync-php:
-    external: true
+#volumes:
+#  vikingsna-docker-sync-php:
+#    external: true
