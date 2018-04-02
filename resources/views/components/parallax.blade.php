@@ -1,6 +1,4 @@
-/*
- * see: https://keithclark.co.uk/articles/pure-css-parallax-websites/
- */
+{{-- see: https://keithclark.co.uk/articles/pure-css-parallax-websites/ --}}
 @push('style')
     <style>
     .parallax {
@@ -36,7 +34,6 @@
     </style>
 @endpush
 
-@component('parallax')
     <div class="parallax">
         <div class="parallax__group">
             <div class="parallax__layer parallax__layer--back">
@@ -47,4 +44,3 @@
             </div>
         </div>
     </div>
-@endcomponent
